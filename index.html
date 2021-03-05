@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%3E%3Ctext%20x='0'%20y='14'%3Eπ%3C/text%3E%3C/svg%3E" type="image/svg+xml" />
+<meta name="description" content="π" />
+<title>π</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  #viz {
+    display: grid;
+    gap: 3px;
+    background: #000;
+    grid-template-columns: repeat(auto-fill, minmax(12px, 1fr));
+  }
+
+  #viz div {
+    min-height: 12px;
+    border-radius: 12px;
+  }
+
+  .n0 { background: #ffff09; }
+  .n1 { background: #fc0006; }
+  .n2 { background: #81ef7d; }
+  .n3 { background: #0e7003; }
+  .n4 { background: #f66a5f; }
+  .n5 { background: #0d00ff; }
+  .n6 { background: #8e0190; }
+  .n7 { background: #9fcfdf; }
+  .n8 { background: #ffffff; }
+  .n9 { background: #faa84b; }
+
+  a {
+    position: absolute;
+    display: block;
+    bottom: 5px;
+    right: 5px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 50%;
+    transition: all 0.3s ease-in;
+  }
+
+  img {
+    display: inline-block;
+  }
+
+  a:hover {
+    background: #000;
+  }
+</style>
+<div id="viz"></div>
+<a href="#">
+  <img alt="GitHub" width="32" height="32" src="data:image/webp;base64,UklGRqQAAABXRUJQVlA4TJcAAAAvH8AHEAXctpEESfknTWequ+vu/v0IIQGRLLPPXnUCsKYi0aW8FG+Uj+JBLmolV7WQyxrkugJtW+COkG3z8UsAFKMIgI8BKKAYBDjyxmDwU1QQigpyRDWM/x8bTApqKCi54cTkmzNhW7KtnTwCtAX6VZKXBGDbUAsAaFuQbYwLPqBt7CciyzYbwizHi7BlgzjqIhSlScISAA==" />
+</div>
+<script>
+  const calculatePi = size => {
+    let i = 1n;
+    let x = 3n * (10n ** (BigInt(size) + 20n));
+    let pi = x;
+
+    while (x > 0) {
+      x = x * i / ((i + 1n) * 4n);
+      pi += x / (i + 2n);
+      i += 2n;
+    }
+
+    return pi / (10n ** 20n);
+  };
+
+  const render = () => {
+    const container = document.getElementById('viz');
+    const cellsPerRow = window.innerWidth / 15;
+    const numRows =  window.innerHeight / 15;
+    const size = Math.ceil(cellsPerRow * (numRows + 1));
+    container.innerHTML = "";
+    container.append(
+      ...calculatePi(size)
+        .toString()
+        .split('')
+        .map(digit => {
+          const node = document.createElement('div');
+          node.className = 'n' + digit;
+          return node;
+        })
+    );
+  };
+
+  window.onresize = render;
+  render();
+</script>
