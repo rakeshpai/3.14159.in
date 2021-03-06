@@ -22,33 +22,24 @@
     border-radius: 12px;
   }
 
-  .n0 { background: #ffff09; }
-  .n1 { background: #fc0006; }
-  .n2 { background: #81ef7d; }
-  .n3 { background: #0e7003; }
-  .n4 { background: #f66a5f; }
-  .n5 { background: #0d00ff; }
-  .n6 { background: #8e0190; }
-  .n7 { background: #9fcfdf; }
-  .n8 { background: #ffffff; }
-  .n9 { background: #faa84b; }
+  .n0 { background: #ff0; }
+  .n1 { background: #f00; }
+  .n2 { background: #8e7; }
+  .n3 { background: #170; }
+  .n4 { background: #e66; }
+  .n5 { background: #10f; }
+  .n6 { background: #809; }
+  .n7 { background: #9de; }
+  .n8 { background: #fff; }
+  .n9 { background: #fa5; }
 
   a {
     position: absolute;
     display: block;
     bottom: 5px;
-    right: 5px;
-    background: rgba(0,0,0,0.6);
-    border-radius: 50%;
-    transition: all 0.3s ease-in;
-  }
-
-  img {
-    display: inline-block;
-  }
-
-  a:hover {
+    right: 10px;
     background: #000;
+    border-radius: 50%;
   }
 </style>
 <div id="viz"></div>
@@ -72,12 +63,11 @@
 
   const render = () => {
     const container = document.getElementById('viz');
-    const cellsPerRow = window.innerWidth / 15;
-    const numRows =  window.innerHeight / 15;
-    const size = Math.ceil(cellsPerRow * (numRows + 1));
+    const cellsPerRow = Math.floor(window.innerWidth / 15);
+    const numRows =  Math.ceil(window.innerHeight / 15);
     container.innerHTML = "";
     container.append(
-      ...calculatePi(size)
+      ...calculatePi(cellsPerRow * numRows)
         .toString()
         .split('')
         .map(digit => {
